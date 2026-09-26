@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniShare - Secure Code-Based File Sharing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- App Header -->
+    <header>
+        <img src="./Media/logo.png" alt="UniShare Logo" class="logo">
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="nav-tabs">
+        <button id="tabShare" class="tab-btn active" type="button">
+            <span class="tab-icon">📤</span> Share File
+        </button>
+        <button id="tabReceive" class="tab-btn" type="button">
+            <span class="tab-icon">📥</span> Receive File
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="app-container">
+        
+        <!-- SECTION 1: SHARE FILE VIEW -->
+        <section id="shareView" class="view-panel active">
+            <div class="card file-box">
+                <!-- Dropzone / Input Area -->
+                <div id="dropzone" class="dropzone">
+                    <input type="file" id="fileInput" hidden>
+                    <button type="button" id="fileButton" class="upload-btn">
+                        <span id="buttonIcon">⬆️</span>
+                        <span id="buttonText">Choose or Drag File</span>
+                    </button>
+                    <p class="drop-hint">Maximum file size: 50MB</p>
+                </div>
+
+                <!-- Selected File Info -->
+                <div id="fileInfo" class="file-info hidden">
+                    <div class="file-badge">
+                        <span id="fileIcon">📄</span>
+                        <div class="file-meta">
+                            <p id="fileName"></p>
+                            <span id="fileSize"></span>
+                        </div>
+                    </div>
+                    <button type="button" id="reuploadBtn" class="reupload-btn">Change File</button>
+                </div>
+
+                <!-- Security & Expiration Options -->
+                <div id="securityOptions" class="security-options hidden">
+                    <h3 class="options-title">🔒 Security Settings</h3>
+                    
+                    <div class="option-group">
+                        <label for="expirationSelect">⏳ Code Expiration:</label>
+                        <select id="expirationSelect" class="custom-select">
+                            <option value="600">10 Minutes</option>
+                            <option value="3600" selected>1 Hour</option>
+                            <option value="86400">24 Hours</option>
+                            <option value="604800">7 Days</option>
+                        </select>
+                    </div>
+
+                    <div class="option-group">
+                        <label for="maxDownloadsSelect">🔢 Max Downloads:</label>
+                        <select id="maxDownloadsSelect" class="custom-select">
+                            <option value="1" selected>1 Download (Single-use)</option>
+                            <option value="5">5 Downloads</option>
+                            <option value="10">10 Downloads</option>
+                            <option value="0">Unlimited Downloads</option>
+                        </select>
+                    </div>
+
+                    <div class="option-group toggle-group">
+                        <label for="autoDeleteToggle" class="toggle-label">
+                            <input type="checkbox" id="autoDeleteToggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text">🗑️ Delete file payload after download</span>
+                        </label>
+                    </div>
+
+                    <button type="button" id="generateCodeBtn" class="action-btn primary-btn">
+                        🔐 Generate Share Code
+                    </button>
+                </div>
+
+                <!-- Generated Code Display Card -->
+                <div id="codeResultCard" class="code-result-card hidden">
+                    <div class="success-header">
+                        <span class="success-icon">🎉</span>
+                        <h3>Share Code Generated!</h3>
+                    </div>
+                    
+                    <div class="code-box">
+                        <span id="displayShareCode" class="share-code-text">--------</span>
+                        <button type="button" id="copyCodeBtn" class="copy-btn" title="Copy Code">
+                            📋 Copy Code
+                        </button>
+                    </div>
+
+                    <div class="share-actions">
+                        <button type="button" id="copyLinkBtn" class="copy-link-btn">
+                            🔗 Copy Shareable Link
+                        </button>
+                        <button type="button" id="createNewShareBtn" class="secondary-btn">
+                            ➕ Share Another File
+                        </button>
+                    </div>
+
+                    <div id="shareMetaData" class="share-meta-info">
+                        <span id="metaExpiration">⏳ Expires in: 1 Hour</span>
+                        <span id="metaDownloads">🔢 Downloads left: 1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Shares History -->
+            <div id="sharesHistoryCard" class="card history-card hidden">
+                <h3>📋 My Active Share Codes</h3>
+                <p class="history-sub">🔒 Private history saved locally on your device</p>
+                <div id="sharesList" class="shares-list">
+                    <!-- Dynamic share items rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: RECEIVE FILE VIEW -->
+        <section id="receiveView" class="view-panel hidden">
+            <div class="card file-box">
+                <h2 class="card-title">🔑 Enter Share Code</h2>
+                <p class="card-sub">Enter the 8-character code shared with you to access and download the file.</p>
+
+                <!-- Code Input Form -->
+                <div class="input-group">
+                    <input type="text" id="codeInput" class="code-input" placeholder="e.g. UNI-8X92K4" maxlength="10" autocomplete="off" spellcheck="false">
+                    <button type="button" id="accessFileBtn" class="action-btn primary-btn">
+                        🔓 Access File
+                    </button>
+                </div>
+
+                <!-- Lockout & Error Alert Box -->
+                <div id="receiveAlert" class="alert-box hidden"></div>
+
+                <!-- Access File Preview Card -->
+                <div id="fileAccessCard" class="file-access-card hidden">
+                    <div class="access-file-header">
+                        <span id="accessFileIcon" class="file-icon-large">📦</span>
+                        <div class="access-meta">
+                            <h3 id="accessFileName">filename.ext</h3>
+                            <span id="accessFileSize">0 KB</span>
+                        </div>
+                    </div>
+
+                    <div class="access-stats">
+                        <div class="stat-badge">
+                            <span class="stat-label">⏳ Expiration:</span>
+                            <span id="accessExpTime" class="stat-value">Active</span>
+                        </div>
+                        <div class="stat-badge">
+                            <span class="stat-label">🔢 Downloads Left:</span>
+                            <span id="accessDownloadsLeft" class="stat-value">1</span>
+                        </div>
+                    </div>
+
+                    <button type="button" id="downloadFileBtn" class="action-btn download-action-btn">
+                        ⬇️ Download File Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Notification Toast Container -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
