@@ -1,6 +1,6 @@
 // UniShare - Code Authentication & File Sharing Engine (Connected to Backend API & MongoDB)
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://unishare-backend-dktz.onrender.com/api";
 const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024; // 50MB Limit
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 2 * 60 * 1000; // 2 Minutes lockout
