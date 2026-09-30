@@ -26,7 +26,7 @@
 
     <!-- Main Content Container -->
     <main class="app-container">
-        
+
         <!-- SECTION 1: SHARE FILE VIEW -->
         <section id="shareView" class="view-panel active">
             <div class="card file-box">
@@ -55,7 +55,7 @@
                 <!-- Security & Expiration Options -->
                 <div id="securityOptions" class="security-options hidden">
                     <h3 class="options-title">🔒 Security Settings</h3>
-                    
+
                     <div class="option-group">
                         <label for="expirationSelect">⏳ Code Expiration:</label>
                         <select id="expirationSelect" class="custom-select">
@@ -95,7 +95,7 @@
                         <span class="success-icon">🎉</span>
                         <h3>Share Code Generated!</h3>
                     </div>
-                    
+
                     <div class="code-box">
                         <span id="displayShareCode" class="share-code-text">--------</span>
                         <button type="button" id="copyCodeBtn" class="copy-btn" title="Copy Code">
@@ -138,7 +138,8 @@
 
                 <!-- Code Input Form -->
                 <div class="input-group">
-                    <input type="text" id="codeInput" class="code-input" placeholder="e.g. UNI-8X92K4" maxlength="10" autocomplete="off" spellcheck="false">
+                    <input type="text" id="codeInput" class="code-input" placeholder="e.g. UNI-8X92K4" maxlength="10"
+                        autocomplete="off" spellcheck="false">
                     <button type="button" id="accessFileBtn" class="action-btn primary-btn">
                         🔓 Access File
                     </button>
@@ -176,6 +177,28 @@
         </section>
 
     </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/manish-kumar-3bb405322?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                    target="_blank" rel="noopener noreferrer" class="footer-social-link linkedin" aria-label="LinkedIn">
+                    <img src="./Media/social-media-logo/linkedin.png" alt="LinkedIn">
+                </a>
+                <a href="https://github.com/manish001co-cmd" target="_blank" rel="noopener noreferrer"
+                    class="footer-social-link github" aria-label="GitHub">
+                    <img src="./Media/social-media-logo/github.png" alt="GitHub">
+                </a>
+               
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                    class="footer-social-link instagram" aria-label="Instagram">
+                    <img src="./Media/social-media-logo/instagram.png" alt="Instagram">
+                </a>
+            </div>
+            <p>&copy; <span id="year"></span> Manish Kumar — All Rights Reserved. ❤️ </p>
+        </div>
+    </footer>
 
     <!-- Notification Toast Container -->
     <div id="toast" class="toast hidden"></div>

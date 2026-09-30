@@ -267,7 +267,7 @@ function displayAccessFile(share) {
 
     const expiresAtMs = new Date(share.expiresAt).getTime();
     accessExpTime.textContent = formatRemainingTime(expiresAtMs);
-    
+
     const downloadsLeft = share.maxDownloads === 0 ? "Unlimited" : (share.maxDownloads - share.downloadsCount);
     accessDownloadsLeft.textContent = downloadsLeft;
 
@@ -391,7 +391,7 @@ function renderLocalHistory() {
 
         const item = document.createElement("div");
         item.className = "share-item";
-        
+
         const downloadsText = share.maxDownloads === 0 ? "∞" : `${share.maxDownloads} max`;
 
         item.innerHTML = `
@@ -451,6 +451,10 @@ function showToast(message, isError = false) {
 
 // INIT
 window.addEventListener("DOMContentLoaded", () => {
+    // Set footer copyright year
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
     renderLocalHistory();
 
     // Check URL parameter (?code=UNI-8X92K4)
